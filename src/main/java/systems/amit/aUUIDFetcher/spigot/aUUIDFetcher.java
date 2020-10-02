@@ -1,14 +1,15 @@
-package systems.amit.spigot.aUUIDFetcher;
+package systems.amit.aUUIDFetcher.spigot;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
+import systems.amit.aUUIDFetcher.StringCallback;
+import systems.amit.aUUIDFetcher.UUIDCallback;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,8 +42,7 @@ public class aUUIDFetcher implements Listener {
         if (uuidCache.containsKey(playerName)) {
             callback.onRetrieve(uuidCache.get(playerName));
         } else if (plugin.getServer().getPlayer(playerName) != null) {
-            Player p = plugin.getServer().getPlayer(playerName);
-            uuidCache.put(playerName, p.getUniqueId());
+            uuidCache.put(playerName, plugin.getServer().getPlayer(playerName).getUniqueId());
             callback.onRetrieve(uuidCache.get(playerName));
         } else {
             plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
@@ -56,8 +56,7 @@ public class aUUIDFetcher implements Listener {
         if (uuidCache.containsKey(playerName)) {
             return uuidCache.get(playerName);
         } else if (plugin.getServer().getPlayer(playerName) != null) {
-            Player p = plugin.getServer().getPlayer(playerName);
-            uuidCache.put(playerName, p.getUniqueId());
+            uuidCache.put(playerName, plugin.getServer().getPlayer(playerName).getUniqueId());
             return uuidCache.get(playerName);
         } else {
             return _fetchUUID(playerName);
@@ -87,12 +86,11 @@ public class aUUIDFetcher implements Listener {
             } else if (con.getResponseCode() == 400) {
                 uuidCache.put(playerName, null);
             } else {
-                plugin.getLogger().severe(PREFIX + "Error while trying to fetch uuid: API response code - " + con.getResponseCode());
+                plugin.getLogger().severe(PREFIX + "Error while trying to fetch uuid from API: response code " + con.getResponseCode());
             }
 
         } catch (IOException e) {
-            plugin.getLogger().severe(PREFIX + "Error while trying to fetch uuid: could not connect to API");
-            e.printStackTrace();
+            plugin.getLogger().severe(PREFIX + "Error while trying to fetch uuid from API: " + e.getMessage());
         } finally {
             if (con != null) con.disconnect();
             try {
@@ -111,8 +109,7 @@ public class aUUIDFetcher implements Listener {
         if (nameCache.containsKey(uuid)) {
             callback.onRetrieve(nameCache.get(uuid));
         } else if (plugin.getServer().getPlayer(uuid) != null) {
-            Player p = plugin.getServer().getPlayer(uuid);
-            nameCache.put(uuid, p.getName());
+            nameCache.put(uuid, plugin.getServer().getPlayer(uuid).getName());
             callback.onRetrieve(nameCache.get(uuid));
         } else {
             plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
@@ -126,15 +123,14 @@ public class aUUIDFetcher implements Listener {
         if (nameCache.containsKey(uuid)) {
             return nameCache.get(uuid);
         } else if (plugin.getServer().getPlayer(uuid) != null) {
-            Player p = plugin.getServer().getPlayer(uuid);
-            nameCache.put(uuid, p.getName());
+            nameCache.put(uuid, plugin.getServer().getPlayer(uuid).getName());
             return nameCache.get(uuid);
         } else {
             return _fetchName(uuid);
         }
     }
 
-    private String _fetchName(UUID uuid){
+    private String _fetchName(UUID uuid) {
         String result = null;
         HttpURLConnection con = null;
         InputStream is = null;
@@ -156,12 +152,11 @@ public class aUUIDFetcher implements Listener {
             } else if (con.getResponseCode() == 400) {
                 nameCache.put(uuid, null);
             } else {
-                plugin.getLogger().severe(PREFIX + "Error while trying to fetch name: API response code - " + con.getResponseCode());
+                plugin.getLogger().severe(PREFIX + "Error while trying to fetch name from API: response code " + con.getResponseCode());
             }
 
         } catch (IOException e) {
-            plugin.getLogger().severe(PREFIX + "Error while trying to fetch name: could not connect to API");
-            e.printStackTrace();
+            plugin.getLogger().severe(PREFIX + "Error while trying to fetch name from API: " + e.getMessage());
         } finally {
             if (con != null) con.disconnect();
             try {
