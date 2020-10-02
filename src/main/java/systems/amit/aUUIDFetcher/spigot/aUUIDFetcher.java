@@ -21,7 +21,7 @@ import java.util.UUID;
 
 public class aUUIDFetcher implements Listener {
 
-    private final String PREFIX = "[aUUIDFetcher v2.0] ";
+    private final String PREFIX = "[aUUIDFetcher v3.0] ";
 
     private HashMap<String, UUID> uuidCache;
     private HashMap<UUID, String> nameCache;
