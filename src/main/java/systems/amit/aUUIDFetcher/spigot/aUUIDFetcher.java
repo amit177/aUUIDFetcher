@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class aUUIDFetcher implements Listener {
 
-    private final String PREFIX = "[aUUIDFetcher v3.0] ";
+    private final String PREFIX = "[aUUIDFetcher v3.1] ";
 
     private HashMap<String, UUID> uuidCache;
     private HashMap<UUID, String> nameCache;
@@ -35,7 +35,7 @@ public class aUUIDFetcher implements Listener {
 
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        plugin.getLogger().severe(PREFIX + "Hooked into " + plugin.getName());
+        plugin.getLogger().info(PREFIX + "Hooked into " + plugin.getName());
     }
 
     public void fetchUUID(String playerName, UUIDCallback callback) {
