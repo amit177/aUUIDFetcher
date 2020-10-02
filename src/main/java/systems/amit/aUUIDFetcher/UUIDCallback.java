@@ -1,4 +1,4 @@
-package systems.amit.spigot.aUUIDFetcher;
+package systems.amit.aUUIDFetcher;
 
 import java.util.UUID;
 
