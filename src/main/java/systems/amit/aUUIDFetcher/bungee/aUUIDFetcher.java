@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class aUUIDFetcher implements Listener {
 
-    private final String PREFIX = "[aUUIDFetcher v3.1] ";
+    private final String PREFIX = "[aUUIDFetcher v3.2] ";
 
     private HashMap<String, UUID> uuidCache;
     private HashMap<UUID, String> nameCache;

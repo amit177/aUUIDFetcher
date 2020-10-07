@@ -9,7 +9,7 @@ To use the library, first install it using the `install-to-localrepo.bat` script
 <dependency>
     <groupId>systems.amit</groupId>
     <artifactId>aUUIDFetcher</artifactId>
-    <version>3.0</version>
+    <version>3.2</version>
     <scope>compile</scope>
 </dependency>
 ```
