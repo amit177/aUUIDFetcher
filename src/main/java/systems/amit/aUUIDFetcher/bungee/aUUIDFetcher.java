@@ -86,25 +86,17 @@ public class aUUIDFetcher implements Listener {
                 String formatUUID = resultId.replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5");
                 result = UUID.fromString(formatUUID);
                 uuidCache.put(playerName, result);
-            } else if (con.getResponseCode() == 400) {
-                uuidCache.put(playerName, null);
             } else {
+                uuidCache.put(playerName, null);
                 plugin.getLogger().severe(PREFIX + "Error while trying to fetch uuid: API response code - " + con.getResponseCode());
             }
-
         } catch (IOException e) {
             plugin.getLogger().severe(PREFIX + "Error while trying to fetch uuid: could not connect to API");
             e.printStackTrace();
         } finally {
             if (con != null) con.disconnect();
-            try {
-                if (is != null) is.close();
-            } catch (Exception ignored) {
-            }
-            try {
-                if (br != null) br.close();
-            } catch (Exception ignored) {
-            }
+            try { if (is != null) is.close(); } catch (Exception ignored) { }
+            try { if (br != null) br.close(); } catch (Exception ignored) { }
         }
         return result;
     }
@@ -153,25 +145,17 @@ public class aUUIDFetcher implements Listener {
 
                 result = object.get("name").getAsString();
                 nameCache.put(uuid, result);
-            } else if (con.getResponseCode() == 400) {
-                nameCache.put(uuid, null);
             } else {
+                nameCache.put(uuid, null);
                 plugin.getLogger().severe(PREFIX + "Error while trying to fetch name: API response code - " + con.getResponseCode());
             }
-
         } catch (IOException e) {
             plugin.getLogger().severe(PREFIX + "Error while trying to fetch name: could not connect to API");
             e.printStackTrace();
         } finally {
             if (con != null) con.disconnect();
-            try {
-                if (is != null) is.close();
-            } catch (Exception ignored) {
-            }
-            try {
-                if (br != null) br.close();
-            } catch (Exception ignored) {
-            }
+            try { if (is != null) is.close(); } catch (Exception ignored) { }
+            try { if (br != null) br.close(); } catch (Exception ignored) { }
         }
         return result;
     }
@@ -185,7 +169,7 @@ public class aUUIDFetcher implements Listener {
     }
 
     @EventHandler
-    private void aUUIDFetcher_removePlayer(PlayerDisconnectEvent e) {
+    public void aUUIDFetcher_removePlayer(PlayerDisconnectEvent e) {
         nameCache.remove(e.getPlayer().getUniqueId());
     }
 }
